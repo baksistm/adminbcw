@@ -2,44 +2,107 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Meu Perfil | BCW</title>
+    <title>Perfil Administrativo | BCW</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #ffffff; display: flex; flex-direction: column; align-items: center; padding-top: 50px; }
-        .container { width: 350px; text-align: center; }
-        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; }
-        .btn-save { background: #018570; color: white; border: none; width: 100%; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        :root { --primary: #264597; --white: #ffffff; --success: #018570; }
+        body { 
+            font-family: 'Segoe UI', sans-serif; 
+            background: var(--white); 
+            display: flex; flex-direction: column; align-items: center; 
+            justify-content: center; height: 100vh; margin: 0;
+        }
+        .logo { width: 160px; margin-bottom: 30px; }
+        .card { 
+            width: 100%; max-width: 380px; padding: 30px; 
+            background: #fdfdfd; border-radius: 15px; 
+            box-shadow: 0 8px 30px rgba(0,0,0,0.05); border: 1px solid #eee;
+        }
+        h2 { color: var(--primary); text-align: center; margin-bottom: 25px; font-weight: 300; }
+        label { display: block; margin-bottom: 5px; color: #666; font-size: 13px; font-weight: bold; }
+        input { 
+            width: 100%; padding: 12px; margin-bottom: 20px; 
+            border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box;
+            font-size: 15px; transition: 0.3s;
+        }
+        input:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 5px rgba(38, 69, 151, 0.2); }
+        .btn-save { 
+            width: 100%; padding: 15px; background: var(--success); 
+            color: white; border: none; border-radius: 8px; 
+            cursor: pointer; font-weight: bold; letter-spacing: 1px;
+        }
+        .btn-back { display: block; text-align: center; margin-top: 20px; color: var(--primary); text-decoration: none; font-size: 14px; }
     </style>
 </head>
 <body>
-    <img src="assets/logo-beto-carrero.png" height="60" style="margin-bottom: 30px;">
-    <div class="container">
+
+    <img src="assets/logo-beto-carrero.png" class="logo">
+
+    <div class="card">
         <h2>Editar Perfil</h2>
-        <input type="text" id="newNome" placeholder="Nome Social">
-        <input type="text" id="newUser" placeholder="Novo Usuário">
-        <input type="password" id="newPass" placeholder="Nova Senha">
-        <button class="btn-save" onclick="atualizar()">Salvar Alterações</button>
-        <p><a href="admin.html">Voltar ao Painel</a></p>
+        
+        <label>NOME SOCIAL</label>
+        <input type="text" id="editNome" placeholder="Carregando...">
+
+        <label>USUÁRIO</label>
+        <input type="text" id="editUser" placeholder="Carregando...">
+
+        <label>SENHA</label>
+        <input type="text" id="editPass" placeholder="Carregando...">
+
+        <button class="btn-save" onclick="salvar()">SALVAR ALTERAÇÕES</button>
+        <a href="admin.html" class="btn-back">← Voltar ao Painel</a>
     </div>
 
     <script>
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzH08I-iy5nxztK4WsVwV64P0RgZQ0V7X4sw8tNHG5MdcuYU6A7h6QVxyAiQ-qmiK8/exec';
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwfZszgVVlveHSGbMiP_S8TuaRFZ8ARz9gr7fkA7cbem-iZTRMdpgRArGedQesc95U/exec'; // Insira aqui a URL do Google Script
+        const userRow = localStorage.getItem('userRow');
 
-        async function atualizar() {
+        // BUSCA DADOS ATUAIS AO CARREGAR
+        async function carregar() {
+            if (!userRow) { window.location.href = 'index.html'; return; }
+            
+            try {
+                const response = await fetch(`${SCRIPT_URL}?row=${userRow}`);
+                const data = await response.json();
+                
+                document.getElementById('editNome').value = data.nomeSocial;
+                document.getElementById('editUser').value = data.usuario;
+                document.getElementById('editPass').value = data.senha;
+            } catch (e) {
+                alert("Erro ao carregar dados atuais.");
+            }
+        }
+
+        // SALVA NA PLANILHA
+        async function salvar() {
+            const btn = document.querySelector('.btn-save');
+            btn.innerText = "PROCESSANDO...";
+            btn.disabled = true;
+
             const payload = {
                 action: 'update',
-                row: localStorage.getItem('userRow'),
-                newNome: document.getElementById('newNome').value,
-                newUser: document.getElementById('newUser').value,
-                newPass: document.getElementById('newPass').value
+                row: userRow,
+                newNome: document.getElementById('editNome').value,
+                newUser: document.getElementById('editUser').value,
+                newPass: document.getElementById('editPass').value
             };
 
-            await fetch(SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                body: JSON.stringify(payload)
-            });
-            alert("Solicitação enviada! Verifique sua planilha.");
+            try {
+                // Usamos POST para enviar os dados
+                await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(payload)
+                });
+                alert("✅ Informações atualizadas no sistema com sucesso");
+            } catch (e) {
+                alert("❌ Erro ao salvar. Verifique a programação, entre em contato: (47) 9 9198-1136.");
+            } finally {
+                btn.innerText = "SALVAR ALTERAÇÕES";
+                btn.disabled = false;
+            }
         }
+
+        window.onload = carregar;
     </script>
 </body>
 </html>
