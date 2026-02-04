@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Meu Perfil | BCW</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #ffffff; display: flex; flex-direction: column; align-items: center; padding-top: 50px; }
+        .container { width: 350px; text-align: center; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; }
+        .btn-save { background: #018570; color: white; border: none; width: 100%; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <img src="assets/logo-beto-carrero.png" height="60" style="margin-bottom: 30px;">
+    <div class="container">
+        <h2>Editar Perfil</h2>
+        <input type="text" id="newNome" placeholder="Nome Social">
+        <input type="text" id="newUser" placeholder="Novo Usuário">
+        <input type="password" id="newPass" placeholder="Nova Senha">
+        <button class="btn-save" onclick="atualizar()">Salvar Alterações</button>
+        <p><a href="admin.html">Voltar ao Painel</a></p>
+    </div>
+
+    <script>
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzH08I-iy5nxztK4WsVwV64P0RgZQ0V7X4sw8tNHG5MdcuYU6A7h6QVxyAiQ-qmiK8/exec';
+
+        async function atualizar() {
+            const payload = {
+                action: 'update',
+                row: localStorage.getItem('userRow'),
+                newNome: document.getElementById('newNome').value,
+                newUser: document.getElementById('newUser').value,
+                newPass: document.getElementById('newPass').value
+            };
+
+            await fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: JSON.stringify(payload)
+            });
+            alert("Solicitação enviada! Verifique sua planilha.");
+        }
+    </script>
+</body>
+</html>
