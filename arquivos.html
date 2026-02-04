@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Repositório de Arquivos | BCW</title>
+    <style>
+        :root { --primary: #264597; --white: #ffffff; --bg: #fdfdfd; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); text-align: center; padding: 50px; }
+        .back-btn { position: absolute; top: 20px; left: 20px; text-decoration: none; color: var(--primary); font-weight: bold; }
+        .folder-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px; max-width: 1100px; margin: 40px auto;
+        }
+        .folder-btn {
+            background: white; border: 1px solid #ddd; padding: 25px;
+            border-radius: 12px; cursor: pointer; transition: 0.2s;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .folder-btn:hover { background: #eef2ff; border-color: var(--primary); }
+        .folder-btn span { margin-top: 10px; font-weight: 600; color: #444; }
+    </style>
+</head>
+<body>
+    <a href="admin.html" class="back-btn">← Voltar ao Painel</a>
+    <img src="assets/logo-beto-carrero.png" width="120" alt="Logo">
+    <h2>Arquivos e Ativos</h2>
+
+    <div class="folder-grid">
+        <div class="folder-btn" onclick="window.open('https://drive.google.com/drive/folders/1H3mUvIHilhUPxQKnPsyHRnz4VcS_LNcG')">
+            📁 <span>Imagens Atrações</span>
+        </div>
+        <div class="folder-btn" onclick="window.open('https://drive.google.com/drive/folders/1StpGpTXF9qKdeDXpaGQjkoce5pNDDka_')">
+            📁 <span>Restaurantes</span>
+        </div>
+        <div class="folder-btn" onclick="window.open('https://drive.google.com/drive/folders/1GM2joJgY-aGyvj6pVkypXcC2XiQQNsd3')">
+            📁 <span>Game Pass</span>
+        </div>
+        <div class="folder-btn" onclick="window.open('https://drive.google.com/drive/folders/1vJ0fnHxc4TG8MZVI4KIVu55FYnxtnJPe')">
+            📁 <span>Marca</span>
+        </div>
+        
+        <div class="folder-btn" onclick="window.open('https://drive.google.com/drive/folders/19hyV1vOANMhk4OGezDrTd5xHUxzi0ZVy')">
+            🖥️ <span>Monitor</span>
+        </div>
+        <div class="folder-btn" onclick="window.open('https://drive.google.com/drive/folders/134tsnaywn4_Ax3JEZ68TSoL3AeCs8Sql')">
+            📱 <span>Mobile</span>
+        </div>
+
+        <div class="folder-btn" onclick="window.open('https://drive.google.com/drive/folders/13LGcE5kEO5yyNSTWn-Z1pZBeza5_K_pm')">
+            🚩 <span>Banners Home</span>
+        </div>
+
+        <div class="folder-btn" onclick="window.open('https://drive.google.com/drive/folders/1xykfgHeOOduzYjHPxhXn0e-ZdKh6Pbiz')">
+            📄 <span>Textos</span>
+        </div>
+    </div>
+</body>
+</html>
