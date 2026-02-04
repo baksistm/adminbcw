@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Administração BCW</title>
+    <style>
+        :root {
+            --primary: #264597; --accent: #57bfee; --danger: #dc2321;
+            --white: #ffffff; --bg: #f4f7f9;
+        }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--bg);
+            display: flex; justify-content: center; align-items: center;
+            height: 100vh; margin: 0;
+        }
+        .login-card {
+            background: var(--white); padding: 40px; border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; width: 350px;
+        }
+        .logo { width: 150px; margin-bottom: 20px; }
+        .alert { 
+            background: #fff5f5; color: var(--danger); padding: 15px; 
+            border-radius: 8px; border: 1px solid var(--danger); 
+            margin-bottom: 20px; font-size: 14px; display: none;
+        }
+        input {
+            width: 100%; padding: 12px; margin: 10px 0;
+            border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box;
+        }
+        button {
+            width: 100%; padding: 12px; background: var(--primary);
+            color: white; border: none; border-radius: 8px; cursor: pointer;
+            font-weight: bold; transition: 0.3s;
+        }
+        button:hover { background: var(--accent); }
+        
+        /* Overlay de Carregamento */
+        .loader-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--white); display: none; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 1000;
+        }
+        .spinner {
+            width: 50px; height: 50px; border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--primary); border-radius: 50%;
+            animation: spin 1s linear infinite; margin-bottom: 20px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <div class="login-card" id="loginCard">
+        <img src="assets/logo-beto-carrero.png" alt="Logo" class="logo">
+        <div id="loginAlert" class="alert">
+            ⚠️ <strong>Você deve realizar o login</strong><br>
+            Não será possível acessar a administração sem validar seu acesso.
+        </div>
+        <input type="text" id="userInput" placeholder="Usuário">
+        <input type="password" id="passInput" placeholder="Senha">
+        <button onclick="validarAcesso()">Entrar</button>
+    </div>
+
+    <div class="loader-overlay" id="loader">
+        <div class="spinner"></div>
+        <h2 id="welcomeMsg" style="color: var(--primary);">Bem vindo</h2>
+    </div>
+
+    <script>
+        function validarAcesso() {
+            const user = document.getElementById('userInput').value;
+            const pass = document.getElementById('passInput').value;
+
+            // Simulação de validação via Google Sheets (ID: 1GUNfJ-007DqEqd2UEUcrNRPhy9Sp5HYTedUrq9hk7Qk)
+            // Aqui você deve conectar com sua API de leitura da planilha
+            if (user === "admin" && pass === "123") { 
+                const nomeSocial = "Colaborador BCW"; // Pego da Coluna 1 da planilha [cite: 12]
+                
+                document.getElementById('loginCard').style.display = 'none';
+                document.getElementById('loader').style.display = 'flex';
+                document.getElementById('welcomeMsg').innerText = `Bem vindo ${nomeSocial}`; [cite: 8]
+
+                setTimeout(() => {
+                    window.location.href = 'admin.html';
+                }, 4000); [cite: 7]
+            } else {
+                document.getElementById('loginAlert').style.display = 'block'; [cite: 5, 6]
+            }
+        }
+    </script>
+</body>
+</html>
