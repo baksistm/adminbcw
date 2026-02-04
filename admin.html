@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel Administrativo | BCW</title>
+    <style>
+        :root {
+            --primary: #264597; --white: #ffffff; --gray: #f8f9fa;
+        }
+        body {
+            font-family: 'Segoe UI', sans-serif; margin: 0;
+            background-color: var(--white); color: var(--primary);
+            display: flex; flex-direction: column; align-items: center;
+        }
+        header { padding: 40px; }
+        .logo-main { width: 220px; }
+        .grid-container {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px; width: 90%; max-width: 1000px; margin-top: 20px;
+        }
+        .admin-card {
+            background: var(--gray); border: 2px solid #eee; border-radius: 20px;
+            padding: 40px; text-align: center; cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .admin-card:hover {
+            transform: translateY(-10px); border-color: var(--primary);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+        .admin-card h3 { margin-top: 15px; font-size: 22px; }
+        .icon { font-size: 50px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="assets/logo-beto-carrero.png" alt="Logo BCW" class="logo-main">
+    </header>
+
+    <h1 style="font-weight: 300;">Gestão Administrativa</h1>
+
+    <div class="grid-container">
+        <div class="admin-card" onclick="location.href='colaboracao.html'">
+            <div class="icon">🤝</div>
+            <h3>Colaboração</h3>
+        </div>
+
+        <div class="admin-card" onclick="location.href='arquivos.html'">
+            <div class="icon">📂</div>
+            <h3>Arquivos</h3>
+        </div>
+
+        <div class="admin-card" onclick="location.href='perfil.html'">
+            <div class="icon">👤</div>
+            <h3>Perfil</h3>
+        </div>
+    </div>
+
+</body>
+</html>
